@@ -449,5 +449,50 @@
 		\item Azaz a helyes megoldás: \textbf{1 db}.
 	\end{itemize}
 	
+	\textbf{9.2.3 Feladat}
+	
+	Adjuk meg a konfliktus-sorbarendezhető ütemezések számát az alábbi két tranzakcióra.
+	\begin{lstlisting}
+	T1: R1(A); W1(A); R1(B); W1(B);
+	T2: R2(A); W2(A); R2(B); W2(B);
+	\end{lstlisting}
+	
+	\begin{itemize}
+		\item (T1, T2) és (T2, T1) mindkét soros ütemezés esetén szóba jövő cserékkel keletkezett konfliktus-sorbarendezhető ütemezéseket meg kell nézni.
+		\item \textbf{(T1, T2):}
+		\begin{lstlisting}
+	//T1:
+	R1(A); W1(A);	//1
+	R1(B); W1(B);	//2
+	
+	//T2:
+	R2(A); W2(A);	//3
+	R2(B); W2(B);	//4
+		\end{lstlisting}
+		\begin{compactitem}
+			\item 4 részre osztottuk fel a tranzakciókat: ezen részek egy adatot használnak fel, és nem kerülhet bele azonos adatra vonatkozó művelet.
+			\item 1.) és 4.) helye fix, mivel a tranzakción belüli sorrendjüket nem cserélhetjük meg, ugyanakkor
+			\begin{compactitem}
+				\item A 4.) nem kerülhet T1 utolsó művelete elé, mivel ugyan azon a adaton hajtanak végre műveletet.
+				\item Az 1.) hasonlóan nem cserélhető fel azonos tranzakció műveleteivel, és a T2 első műveletével sem, mivel azonos adaton hajtanak végre műveletet.
+			\end{compactitem}
+		
+			\item A 2.) és 3.)-at cserélgethetjük úgy, hogy azonos tranzakción belüli műveletek sorrendje ne változzon egymáshoz képest.
+			\begin{compactitem}
+				\item Mivel 1.) és 4.)-et nem cserélgethetjük, megállapítottuk, hogy csak 2.) és 3.)-on belül csinálhatunk cseréket.
+				\item Mintha 2 tranzakciót akarnánk ütemezni:
+				\Large \textbf{$\frac{4!}{2! 2!} = 6$}.
+			\end{compactitem}
+		\end{compactitem}
+		
+		\item \textbf{(T2, T1):}
+		\begin{compactitem}
+			\item szimmetrikus (T1, T2)-re.
+			\item Így itt is: \Large \textbf{$\frac{4!}{2! 2!} = 6$}.
+		\end{compactitem}
+	
+		\item \textbf{Tehát a konfliktus-sorbarendezhető ütemezések száma összesen:} {\Large $6+6 = 12$}
+		\item Megjegyzés: ehhez hasonló feladat biztosan lesz a ZH-ban.
+	\end{itemize}
 
 \end{document}
