@@ -354,6 +354,25 @@
 		\end{compactitem}
 	\end{enumerate}
 
+
 	\textbf{9.2.1 Feladat}
+	
+	Adott az alábbi két tranzakció. Igazoljuk, hogy a (T1, T2) és (T2, T1) soros ütemezések ekvivalensek, vagyis az adatbázison való hatásuk azonos.
+	\begin{lstlisting}
+	T1: READ(A,t); t:=t+2; WRITE(A,t); READ(B,t); t:=t*3; WRITE(B,t);
+	T2: READ(B,s); s:=s*2; WRITE(B,s); READ(A,s); s:=s+3; WRITE(A,s);
+	\end{lstlisting}
+	Adjunk példát a fenti 12 művelet sorba rendezhető és nem sorba rendezhető ütemezésére is.
+	\begin{enumerate}[label = \alph*)]
+		\item Sorba rendezhető ütemezés:
+		\item Nem sorba rendezhető ütemezés:
+		\begin{enumerate}
+			\item Végrehajtjuk T1 első 2 műveletét.
+			\item Végrehajtjuk T2 mind a 6 műveletét.
+			\item Végrehajtjuk T1 maradék 4 műveletét.
+		\end{enumerate}
+	\end{enumerate} 
+
+	
 
 \end{document}
