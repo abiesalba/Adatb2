@@ -104,6 +104,7 @@
 		{\large 2. ZH elméleti része}
 	\end{center}
 	A jegyzetet \textsc{Csonka} Szilvia írta. A jegyzet első számú forrása a gyakorlat.\\
+	Az elméleti kérdések kidolgozása \textsc{Héra} Zoltán jegyzete alapján készült.
 	
 	
 	
@@ -118,22 +119,91 @@
 \section{Rész}
 
 \subsection{Elméleti kérdések}
+
 \begin{enumerate}
+	
 	\item Írja le az UNDO naplózás szabályait és a lemezre írások sorrendjét.
+		\begin{itemize}
+			\item U$_{1}$ : Ha a T tranzakció módosítja az X adatbáziselemet, akkor $<T, X, v>$ típusú naplóbejegyzést azt megelőzően kell lemezre írni, mielőtt X új értékét lemezre írná a rendszer.
+			\item U$_{2}$ : Ha a tranzakció hibamentesen teljesen befejeződött, akkor a COMMIT naplóbejegyzést csak azt követően szabad lemezre írni, hogy a tranzakció által módosított összes adatbáziselem már lemezre íródott, de ezután viszont a lehető leggyorsabban.
+			\item Összefoglalva az U$_{1}$ és U$_{2}$ szabályokat, az egy tranzakcióhoz tartozó lemezre írásokat a következő sorrendben kell megejteni:
+			\begin{enumerate}
+				\item Az adatbáziselemek módosítására vonatkozó naplóbejegyzések kiírása.
+				\item Maguknak a módosított adatbáziselemeknek a kiírása.
+				\item A COMMIT naplóbejegyzés kiírása.
+			\end{enumerate}
+		\end{itemize}
 	
 	\item Adja meg a helyreállítás lépéseit UNDO napló esetén.
-	
+		
+		\begin{figure}[h]
+			\centering
+			\includegraphics[height = 5cm]{undo.png}
+		\end{figure}
+
 	\item Adja meg az egyszerű ellenőrzőpont képzés lépéseit.
+		\begin{itemize}
+			\item A CHECKPOINT megadja, hogy meddig kell visszaolvasnunk a naplózásban egy esetleges hiba bekövetkeztét követő helyreállítás során (úgynevezett ellenőrzőpont).
+			\item \textbf{Képzése}
+			\begin{enumerate}
+				\item Megtiltjuk az új tranzakciók indítását.
+				\item Megvárjuk, amíg minden futó tranzakció COMMIT vagy ABORT módon véget ér.
+				\item A naplót a pufferből a háttértárra írjuk (FLUSH LOG).
+				\item A naplóba beírjuk, hogy CHECKPOINT.
+				\item A naplót újra a háttértárra írjuk: FLUSH LOG.
+				\item Újra fogadjuk a tranzakciókat.
+			\end{enumerate}
+			
+			\item Ezután nyilván elég a CHECKPOINT-ig visszamenni, hiszen előtte minden T$_{i}$ már valahogy befejeződött.
+			
+			\item Probléma: Hosszú ideig tarthat, amíg az aktív tranzakciók befejeződnek. (Új tranzakciókat sokáig nem lehet kiszolgálni) $\rightarrow$ Megoldás: CHECKPOINT képzése működés közben
+		\end{itemize}
 	
 	\item Adja meg a működés közbeni ellenőrzőpont képzés lépéseit UNDO napló esetén.
-	
+		\begin{itemize}
+			\item <START CKPT (T$_{1}$,\ldots,T$_{k}$)>naplóbejegyzés készítése,majd lemezre írása (FLUSHLOG)\\			
+			ahol\ T$_{1}$,\ldots,T$_{k}$\ az\ éppen aktív tranzakciók nevei .
+			\item Meg kell várni a T$_{1}$,\ldots,T$_{k}$ tranzakciók mindegyikének normális vagy nem normális befejeződését, nem tiltva közben újabb tranzakciók indítását.
+			\item Ha a T$_{1}$,\ldots,T$_{k}$ tranzakciók mindegyike befejeződött,\\
+			akkor <END CKPT> naplóbejegyzés elkészítése,\\
+			majd lemezre írása (FLUSH LOG).
+			
+		\end{itemize}
 	\item Írja le a REDO naplózás szabályait és a lemezre írások sorrendjét.
+		\begin{itemize}
+			\item A REDO naplózás szabályai:\\
+			R1: Mielőtt az adatbázis bármely X elemét a lemezen módosítanánk, az X módosítására vonatkozó összes 
+			naplóbejegyzésnek, azaz <T, X, v> -nek és <T, COMMIT>-nak a lemezre kell kerülnie.
+			
+			\item A lemezre írás sorrendje:\\
+			\textit{Minthogy a COMMIT bejegyzést csak akkor írhatjuk a naplóba, miután a tranzakció teljesen és hibamentesen befejeződött, így a COMMIT bejegyzés csak a módosításokat leíró bejegyzések után állhat, ezért úgy is összegezhetjük R$_{1}$ szabálya hatását, hogy: ha helyrehozó naplózást használunk, akkor az egy tranzakcióra vonatkozó lemezre írásoknak a következő sorrendben kell megtörténniük:}
+			\begin{enumerate}
+				\item Az adatbáziselemek módosítását leíró naplóbejegyzések lemezre írása.
+				\item A COMMIT naplóbejegyzsé lemezre írása.
+				\item Az adatbáziselemek értékének tényleges cseréje a lemezen.
+			\end{enumerate}
+			
+		\end{itemize}
 	
 	\item Adja meg a helyreállítás lépéseit REDO napló esetén.
-	
+		\begin{figure}[h]
+			\centering
+			\includegraphics[height = 3cm]{redo.png}
+		\end{figure}
+
 	\item Adja meg a működés közbeni ellenőrzőpont képzés lépéseit REDO napló esetén.
-	
+		\begin{enumerate}
+			\item <START CKPT(T$_{1}$,...,T$_{k}$)> naplóbejegyzés elkészítése és lemezre írása, ahol T$_{1}$,...,T$_{k}$ az összes éppen aktív tranzakció.
+			\item Az összes olyan adatbáziselem kiírása lemezre, melyeket olyan tranzakciók írtak a pufferekbe, melyek a START CKPT naplóba írásakor már befejeződtek, de puffereik lemezre még nem kerültek.
+			\item <END CKPT> bejegyzés naplóba írása, és a napló lemezre írása.
+		\end{enumerate}	
+		
 	\item Adja meg a működés közbeni ellenőrzőpont képzés lépéseit UNDO/REDO napló esetén.
+		\begin{enumerate}
+			\item Írjunk a naplóba <START CKPT(T$_{1}$, \ldots , T$_{k}$)> naplóbejegyzést, ahol T$_{1}$, \ldots , T$_{k}$ az aktív tranzakciók, majd írjuk a naplót lemzre.
+			\item Írjuk a lemezre az összes piszkos puffert, tehát azokat, melyek egy vagy több módosított adatbáziselemet tartalmaznak. A helyrehozó naplózástól eltérően itt az összes piszkos puffert lemezre írjuk, nem csak a már befejezett tranzakciók által módosítottakat.
+			\item Írjunk <END CKPT> bejegyzést a naplóba, majd írjuk a naplót lemezre.
+		\end{enumerate}
 \end{enumerate}
 
 \subsection{Feldatok}
@@ -303,18 +373,42 @@
 
 	\begin{enumerate}
 		\item Mit jelent az, hogy két ütemezés konfliktus-ekvivalens?
-		
+		\begin{itemize}
+			\item Azt mondjuk, hogy két ütemezés konfliktus ekvivalens (confilct-equivalent), ha szomszédos műveletek nem konfliktusos cseréinek sorozatával az egyiket átalakíthatjuk a másikká.
+			\item Megjegyzés: A konfliktus (conflict) vagy konfliktuspár olyan egymást követő műveletpár az ütemezésben, amelyeknek ha a sorrendjét felcseréljük, akkor legalább az egyik tranzakció viselkedése egváltozhat.
+		\end{itemize}
+			
 		\item Mit jelent az, hogy egy ütemezés konfliktus-sorbarendezhető?
-		
+			\begin{itemize}
+				\item Azt mondjuk, hogy egy ütemezés konfliktus-sorbarendezhető (conflict-serializable schedule), ha konfliktus-ekvivalens valamely soros ütemezéssel. 
+			\end{itemize}
+				
 		\item Mi az a megelőzési gráf és hogyan épül fel?
-		
+			\begin{compactitem}
+				\item A megelőzési gráf csomópontjai az S ütemezés tranzakciói.
+				\item Ha a tranzakciókat T$_{i}$-vel jelöljük az i függvényében, akkor a T$_{i}$-nek megfelelő csomópontot az i egésszel jelöljük. 
+				\item Az i csomópontból a j csomópontba vezet irányított él, ha T$_{i} <_{S} T_{i}$.
+			\end{compactitem}
 		\item Mit állíthatunk konzisztens, kétfázisú tranzakciók jogszerű ütemezéséről?
+			\begin{itemize}
+				\item Konzisztens, kétfázisú zárolású tranzakciók bármely S jogszerű ütemezését át lehet alakítani konfliktusekvivalens ütemezéssé.
+			\end{itemize}
 		
 		\item Igaz-e, hogy konzisztens tranzakciók jogszerű ütemezése konfliktus-sorbarendezhető? (ellenpélda)
-		
+			\begin{figure}[h]
+				\centering
+				\includegraphics[height = 6cm]{05.png}
+			\end{figure}
 		\item Igaz-e, hogy konzisztens, kétfázisú tranzakciók esetén nem alakulhat ki holtpont? (ellenpélda)
-		
+			\begin{figure}[h]
+				\centering
+				\includegraphics[height = 3cm]{06.png}
+			\end{figure}
 		\item Mi az a várakozási gráf és hogyan épül fel?
+			\begin{itemize}
+				\item Várakozási gráf: csúcsai a tranzakciók és akkor van él T$_{i}$-ből T$_{j}$-be, ha T$_{i}$ vár egy olyan zár elengedésére, amit T$_{j}$ tart éppen.
+				\item A várakozási gráf változik az ütemezés során, ahogy újabb zárkérések érkeznek vagy zárelengedések történnek, vagy az ütemező abortáltat egy tranzakciót.
+			\end{itemize}
 	\end{enumerate}
 
 \subsection{Feladatok}
@@ -356,6 +450,7 @@
 		\end{compactitem}
 	\end{compactitem}
 	
+\newpage
 
 	{\large \textbf{9.1.2 Feladat}}
 	
@@ -469,6 +564,8 @@
 			\item Az ütemező konfliktus - sorbarendezhető sorrendeket enged meg.
 		\end{compactitem}
 	\end{itemize}
+
+\newpage
 
 	{\large \textbf{9.2.2 Feladat}}
 	
