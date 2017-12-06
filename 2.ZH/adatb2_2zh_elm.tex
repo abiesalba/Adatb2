@@ -109,15 +109,15 @@
 	
 	
 	
-	\textbf{Információk}
+{\large \textbf{Információk}}
 	\begin{compactitem}
 		\item pótZH: vizsgaidőszak 1. hetében.
 		\item A ZH $\frac{1}{4}$ 9-kor kezdődik.
 	\end{compactitem}
 	
-	\section{Rész}
+\section{Rész}
 	
-	\textbf{Források}
+	{\large \textbf{Források}}
 	\begin{compactitem}
 	\item A feladatsor és további elméleti részek \textsc{Nikovits} Tibor honlapján: \url{http://people.inf.elte.hu/nikovits/AB2/ab2_feladat9.txt}.
 	
@@ -132,7 +132,7 @@
 	\end{compactitem}
 	
 	
-	\textbf{8.1.1 Feladat} (könyv 463. old.)
+	{\large \textbf{8.1.1 Feladat}} (könyv 463. old.)
 	
 	Tegyük fel, hogy az adatbázisra vonatkozó konzisztenciamegszorítás: 0 <= A <= B. \\
 	Állapítsuk meg, hogy a következő tranzakció megőrzik-e az adatbázis konzisztenciáját.\\
@@ -157,7 +157,7 @@
 		\item \textit{Mejegyzés:} itt nem kérdezték a naplózást, így azt ebben a feladatban nem kell részleteznünk.
 	\end{itemize}
 
-	\textbf{8.2.4 Feladat}(könyv 476. old.)
+	{\large \textbf{8.2.4 Feladat}}(könyv 476. old.)
 	
 	A következő naplóbejegyzés-sorozat a T és U két tranzakcióra vonatkozik:
 	\begin{lstlisting}
@@ -267,7 +267,7 @@
 		
 	\end{itemize}
 
-	\textbf{Az Oracle naplózása}
+	{\large \textbf{Az Oracle naplózása}}
 	\begin{itemize}
 		\item Az Oracle valójában \textit{REDO} naplózást használ. Így elég csak az utasítást lementenie egy update-ről.
 		
@@ -278,14 +278,14 @@
 
 	\section{Rész}
 
-	\textbf{Források}
+	{\large \textbf{Források}}
 	\begin{compactitem}
 		\item Az előadás diái közül a \textit{konkurencia.ppt}, mely a 10., 11., 12. előadás anyagánál megtalálható az előadó honlapján: \url{http://people.inf.elte.hu/kiss/15ab2/13ab2osz.htm}
 		 \item A tankönyv ütemezésekre vonatkozó része a gyakorlat honlapján: \url{http://people.inf.elte.hu/nikovits/AB2/} \textit{UW\_utemezesek.doc}.
 		\item A feladat és további elméleti részek \textsc{Nikovits} Tibor honlapján: \url{http://people.inf.elte.hu/nikovits/AB2/ab2_feladat10.txt}
 	\end{compactitem}
 
-	\textbf{Soros ütemezések} \textit{(konkurencia.ppt 6.dia)}
+	{\large \textbf{Soros ütemezések}} \textit{(konkurencia.ppt 6.dia)}
 	\begin{compactitem}
 		\item "Két tranzakciónak két soros ütemezése van, az egyikben T$_{1}$ megelőzi T$_{2}$‑t, a másikban T$_{2}$ előzi meg T$_{1}$-et."
 		
@@ -294,7 +294,7 @@
 		\item Mindegy, hogy T$_{1}$ és T$_{2}$ egyszerre végrehajtott tranzakciók közül melyik hajtódik végre először, a lényeg a konzisztencia megőrzése.		
 	\end{compactitem}
 
-	\textbf{Ütemezés} \textit{(konkurencia.ppt 3. dia)}
+	{\large \textbf{Ütemezés} }\textit{(konkurencia.ppt 3. dia)}
 	\begin{compactitem}
 		\item "Az ütemezés (schedule) egy vagy több tranzakció által végrehajtott lényeges műveletek időrendben vett sorozata, amelyben az egy tranzakcióhoz tartozó műveletek sorrendje megegyezik a tranzakcióban megadott sorrenddel"
 		
@@ -316,7 +316,7 @@
 	\end{compactitem}
 	
 
-	\textbf{9.1.2 Feladat}
+	{\large \textbf{9.1.2 Feladat}}
 	
 	Adott az alábbi három tranzakció:
 	\begin{lstlisting}
@@ -355,7 +355,7 @@
 	\end{enumerate}
 
 
-	\textbf{9.2.1 Feladat}
+	{\large \textbf{9.2.1 Feladat}}
 	
 	Adott az alábbi két tranzakció. Igazoljuk, hogy a (T1, T2) és (T2, T1) soros ütemezések ekvivalensek, vagyis az adatbázison való hatásuk azonos.
 	\begin{lstlisting}
@@ -411,7 +411,7 @@
 		\end{lstlisting}
 	\end{enumerate} 
 
-	\textbf{Konfliktus-sorbarendezhetőség} \textit{(konkurencia.ppt 11-14. dia)}
+	{\large \textbf{Konfliktus-sorbarendezhetőség}} \textit{(konkurencia.ppt 11-14. dia)}
 	\begin{itemize}
 		\item ELV: nem konfliktusos cserékkel az ütemezést megpróbáljuk soros ütemezéssé átalakítani. Ha ezt meg tudjuk tenni, akkor az eredeti ütemezés sorbarendezhető volt, ugyanis az adatbázis állapotára való hatása változatlan marad minden nem konfliktusos cserével.
 		
@@ -429,7 +429,7 @@
 		\end{compactitem}
 	\end{itemize}
 
-	\textbf{9.2.2 Feladat}
+	{\large \textbf{9.2.2 Feladat}}
 	
 	Az előző feladat tranzakcióiban csak az írási és olvasási műveleteket jelölve a következő két tranzakciót kapjuk:
 	\begin{lstlisting}
@@ -449,7 +449,7 @@
 		\item Azaz a helyes megoldás: \textbf{1 db}.
 	\end{itemize}
 	
-	\textbf{9.2.3 Feladat}
+	{\large \textbf{9.2.3 Feladat}}
 	
 	Adjuk meg a konfliktus-sorbarendezhető ütemezések számát az alábbi két tranzakcióra.
 	\begin{lstlisting}
@@ -494,5 +494,30 @@
 		\item \textbf{Tehát a konfliktus-sorbarendezhető ütemezések száma összesen:} {\Large $6+6 = 12$}
 		\item Megjegyzés: ehhez hasonló feladat biztosan lesz a ZH-ban.
 	\end{itemize}
+
+	{\large \textbf{Megelőzési gráf}}
+	\begin{itemize}
+		\item Lesz olyan feladat, melyben majd fel kell rajzolni.
+		\item Lásd. \textit{konkurencia.ppt 19.dia}
+		\item Pl. ha (1)-nek (2) előtt kell állnia, akkor (1)-vől megy nyíl (2)-be.
+		\item Ha van irányított kör benne, akkor nem konfliktus-sorba rendezhető.
+		\item Ha nincs benne irányított kör, akkor konfliktus-sorba rendezhető.
+	\end{itemize}
+
+	{\large \textbf{A zárak használata}}
+	\begin{itemize}
+		\item A zárolási ütemező a konfliktus-sorbarendezhetőséget követeli meg, (ez erősebb követelmény, mint a sorbarendezhetőség).
+		\item Tranzakciók konzisztenciája (consistency of transactions):
+		\begin{enumerate}
+			\item A tranzakció csak akkor olvashat vagy írhat egy elemet, ha már korábban zárolta azt, és még nem oldotta fel a zárat.
+			\item Ha egy tranzakció zárol egy elemet, akkor később azt fel kell szabadítania.
+		\end{enumerate}
+	
+		\item Az ütemezések jogszerűsége (legality of schedules): 
+		\begin{enumerate}
+			\item Nem zárolhatja két tranzakció ugyanazt az elemet, csak úgy, ha az egyik előbb már feloldotta a zárat. 
+		\end{enumerate}
+	\end{itemize}
+	
 
 \end{document}
