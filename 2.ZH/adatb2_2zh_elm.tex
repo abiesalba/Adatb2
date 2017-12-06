@@ -364,15 +364,90 @@
 	\end{lstlisting}
 	Adjunk példát a fenti 12 művelet sorba rendezhető és nem sorba rendezhető ütemezésére is.
 	\begin{enumerate}[label = \alph*)]
-		\item Sorba rendezhető ütemezés:
-		\item Nem sorba rendezhető ütemezés:
+		\item Sorba rendezhető ütemezésre példa:
+		\begin{enumerate}
+			\item Végrehajtjuk T1 első 3 műveletét.
+			\item Végrehajtjuk T2 első 3 műveletét.
+			\item Végrehajtjuk T1 maradék, utolsó 3 műveletét.
+			\item Végrehajtjuk T2 maradék, utolsó 3 műveletét.
+		\end{enumerate}
+		
+		\begin{lstlisting}
+	READ(A,t) 
+	t:=t+2
+	WRITE(A,t)
+	READ(B,s)
+	s:=s*2
+	WRITE(B,s)
+	READ(B,t)
+	t:=t*3
+	WRITE(B,t)
+	READ(A,s)
+	s:=s+3
+	WRITE(A,s)
+		\end{lstlisting}
+	
+	
+		\item Nem sorba rendezhető ütemezésre példa:
 		\begin{enumerate}
 			\item Végrehajtjuk T1 első 2 műveletét.
 			\item Végrehajtjuk T2 mind a 6 műveletét.
 			\item Végrehajtjuk T1 maradék 4 műveletét.
 		\end{enumerate}
+		\begin{lstlisting}
+	READ(A,t)  
+	t:=t+2
+	READ(B,s)
+	s:=s*2
+	WRITE(B,s)
+	READ(A,s) 		//Az A értékét még korábban elkezdtük változtatni, de még 
+	s:=s+3 					//nem írtuk vissza, itt A korábbi értékével kezdtünk el dolgozni!!
+	WRITE(A,s)		//Olyan lesz, mintha csak T2 változatta volna A-t, pedig T1 is
+				 //	tette, csak az elveszett...
+	WRITE(A,t)
+	READ(B,t)
+	t:=t*3
+	WRITE(B,t);
+		\end{lstlisting}
 	\end{enumerate} 
 
+	\textbf{Konfliktus-sorbarendezhetőség} \textit{(konkurencia.ppt 11-14. dia)}
+	\begin{itemize}
+		\item ELV: nem konfliktusos cserékkel az ütemezést megpróbáljuk soros ütemezéssé átalakítani. Ha ezt meg tudjuk tenni, akkor az eredeti ütemezés sorbarendezhető volt, ugyanis az adatbázis állapotára való hatása változatlan marad minden nem konfliktusos cserével.
+		
+		\item Azt mondjuk, hogy két ütemezés konfliktusekvivalens (conflict-equivalent), ha szomszédos műveletek nem konfliktusos cseréinek sorozatával az egyiket átalakíthatjuk a másikká. 
+		
+		\item Azt mondjuk, hogy egy ütemezés konfliktus-sorbarendezhető (conflict-serializable schedule), ha konfliktusekvivalens valamely soros ütemezéssel. 
+		
+		\item A konfliktus-sorbarendezhetőség elégséges feltétel a sorbarendezhetőségre, vagyis egy konfliktus-sorbarendezhető ütemezés sorbarendezhető ütemezés is egyben. 
+		
+		\item \textbf{Megjegyzés}:
+		\begin{compactitem}
+			\item Egy tranzakcióbn belüli műveletek cseréje nem engedélyezett!!
+			\item Szempont: Több tranzakció azonos elemet egyszerre nem változtathat, de különbözőkét igen.
+			\item Az ütemező konfliktus - sorbarendezhető sorrendeket enged meg.
+		\end{compactitem}
+	\end{itemize}
+
+	\textbf{9.2.2 Feladat}
+	
+	Az előző feladat tranzakcióiban csak az írási és olvasási műveleteket jelölve a következő két tranzakciót kapjuk:
+	\begin{lstlisting}
+	T1: R1(A); W1(A); R1(B); W1(B);
+	T2: R2(B); W2(B); R2(A); W2(A);
+	\end{lstlisting}
+	A fenti 8 művelet ütemezései közül hány darab konfliktusekvivalens a (T1,T2) soros sorrenddel? 
+	\begin{itemize}
+		\item (T1,T2) soros sorrend:
+		\begin{lstlisting}
+	R1(A); W1(A); R1(B); W1(B) | R2(B); W2(B); R2(A); W2(A)
+		\end{lstlisting}
+		
+		\item Csak olyan egymás melletti elemeket cserélhetünk, melyek különböző tranzakcióhoz tartoznak \textit{(lásd. 11-14.dia)}. 
+		\item Tehát az elsőként egyedül felmerülő cserelehetőségünk a két tranzakció "határán" lévő két művelet, de ezeket nem cserélhetjük fel, mivel ugyan azzal a változóval dolgoznak.
+		\item Tehát egyetlen konfliktusekvivalens sorrendet találtunk a (T1, T2)vel: saját magát.
+		\item Azaz a helyes megoldás: \textbf{1 db}.
+	\end{itemize}
 	
 
 \end{document}
