@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.11.21)  7 DEC 2017 19:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.11.21)  7 DEC 2017 19:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1160,22 +1160,22 @@ Package pdftex.def Info: redo.png  used on input line 191. on input line 191.
 Package pdftex.def Info: Requested size: 191.02696pt x 85.35826pt on input line
  191.
  [2 <./redo.png>]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 213.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 214.
 
 
 (c:/texlive/2017/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 217.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 218.
 
 
 (c:/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <7> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 217.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 218.
 
-Underfull \hbox (badness 10000) in paragraph at lines 234--235
+Underfull \hbox (badness 10000) in paragraph at lines 235--236
 
  []
 
@@ -1183,32 +1183,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 234--235
 <05.png, id=183, 295.1025pt x 245.41687pt>
 File: 05.png Graphic file (type png)
 <use 05.png>
-Package pdftex.def Info: 05.png  used on input line 400. on input line 400.
+Package pdftex.def Info: 05.png  used on input line 401. on input line 401.
 Package pdftex.def Info: Requested size: 205.287pt x 170.71652pt on input line 
-400.
+401.
 <06.png, id=184, 382.42876pt x 100.12407pt>
 File: 06.png Graphic file (type png)
 <use 06.png>
-Package pdftex.def Info: 06.png  used on input line 405. on input line 405.
+Package pdftex.def Info: 06.png  used on input line 406. on input line 406.
 Package pdftex.def Info: Requested size: 326.04631pt x 85.35826pt on input line
- 405.
+ 406.
  [6 <./05.png> <./06.png>]
 <abra.jpg, id=199, 1400.432pt x 1593.152pt>
 File: abra.jpg Graphic file (type jpg)
 <use abra.jpg>
-Package pdftex.def Info: abra.jpg  used on input line 447. on input line 447.
+Package pdftex.def Info: abra.jpg  used on input line 448. on input line 448.
 Package pdftex.def Info: Requested size: 125.05048pt x 142.26378pt on input lin
-e 447.
+e 448.
  [7 <./abra.jpg>] [8] [9] [10] [11]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 661.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 661.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 662.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 662.
 
 (./adatb2_2zh_elm.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 661.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 661.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 662.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 662.
 Package rerunfilecheck Info: File `adatb2_2zh_elm.out' has not changed.
 (rerunfilecheck)             Checksum: C775D43991DD6A864CA4CDEFF6884226;639.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 661.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 662.
  ) 
 Here is how much of TeX's memory you used:
  24538 strings out of 492985
@@ -1236,7 +1236,7 @@ rm1000.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb
 ve/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb><c:/texlive/2017/te
 xmf-dist/fonts/type1/public/cm-super/sfti1000.pfb><c:/texlive/2017/texmf-dist/f
 onts/type1/public/cm-super/sftt1000.pfb>
-Output written on adatb2_2zh_elm.pdf (11 pages, 4309206 bytes).
+Output written on adatb2_2zh_elm.pdf (11 pages, 4309223 bytes).
 PDF statistics:
  394 PDF objects out of 1000 (max. 8388607)
  353 compressed objects within 4 object streams
