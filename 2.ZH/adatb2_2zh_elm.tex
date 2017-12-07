@@ -538,9 +538,9 @@
 	WRITE(B,s)
 	READ(A,s) 		//Az A értékét még korábban elkezdtük változtatni, de még 
 	s:=s+3 					//nem írtuk vissza, itt A korábbi értékével kezdtünk el dolgozni!!
-	WRITE(A,s)		//Olyan lesz, mintha csak T2 változatta volna A-t, pedig T1 is
-				 //	tette, csak az elveszett...
-	WRITE(A,t)
+	WRITE(A,s)		
+	WRITE(A,t)		//Felülírja T2 változtatását! 
+				  //Olyan lesz, mintha T2 nem módosította volna A-t
 	READ(B,t)
 	t:=t*3
 	WRITE(B,t);
