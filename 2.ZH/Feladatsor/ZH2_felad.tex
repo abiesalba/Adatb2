@@ -1,0 +1,148 @@
+\documentclass[a4paper,11.5pt, table]{article}
+
+%%%%%% Basic packages begin %%%%%%
+\usepackage[
+	textwidth  = 160mm, 
+	textheight = 230mm, 
+	top        = 25mm, 
+	bottom     = 30mm
+]{geometry}
+\usepackage[normalem]{ulem}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\PassOptionsToPackage{defaults=hu-min}{magyar.ldf}
+\usepackage[magyar]{babel}
+%%%%%%% Basic packages end %%%%%%%
+
+%%%%%% Packages required for this document begin %%%%%%
+\usepackage{
+	amsmath,   % Math mode
+	amsthm,    % "note" environment
+	amsfonts,  % "\mathbb{}" command
+	paralist,  % "compactitem" and "compactenum" environment
+	multirow,  % "\multirow{}{}" command
+	float,     % "H" float specifier
+	tikz,      % Basepackage for nearly all figures
+	listings,  % Used for code snippets
+	etaremune, % Reverse compactenum
+%	graphicx   % For including images
+	enumitem   %for alphabetical enumeration
+}
+\usepackage[unicode]{hyperref} % Clickable links
+%%%%%%% Packages required for this document end %%%%%%%
+
+%%%%%% TikZ options start %%%%%%
+\usetikzlibrary{
+	positioning, % Contains positioning utilities, such as "below = of" 
+	calc,        % Adding coordinates
+	math         % Needed for global variables
+}
+
+\tikzstyle{NodeBase} = [
+	rectangle,
+	text centered,
+	draw = black
+]
+
+\definecolor{DefaultObjectColor}{gray}{0.9} % This is the default color of object in the TikZ pictures
+
+\tikzstyle{arrow} = [
+	thick,
+	->,
+	>=stealth
+]
+%%%%%%% TikZ options end %%%%%%%
+
+%%%%%% lstlistings envvironment options start %%%%%%
+
+\lstdefinestyle{customc}{ % C/C++ code snippet style
+	belowcaptionskip = 1\baselineskip,
+	breaklines       = true,
+	frame            = L, % Double line on the left
+	language         = C++,
+	showstringspaces = false,
+	basicstyle       = \ttfamily,
+	keywordstyle     = \bfseries\color{green!40!black},
+	stringstyle      = \color{orange},
+	emphstyle        = \color{blue}, % Defined below
+	tabsize          = 4,
+	columns          = fullflexible,
+}
+
+\lstset{
+	escapechar = @,
+	style      = customc, % Default code snippet style
+	%NOTE In order to use special characters in code snippets, one has to manually define them.
+	literate   = {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1	{Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1	{ö}{{\"o}}1 {ü}{{\"u}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+	{ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+	{€}{{\euro}}1 {£}{{\pounds}}1 {~}{$\sim$}{1}	
+}
+
+%%%%%%% lstlistings envvironment options end %%%%%%%
+
+%%%%%%%% Compilation error fix begin %%%%%%%%
+\makeatletter
+\expandafter\let\csname active@char\string?\endcsname\relax
+\expandafter\let\csname active@char\string!\endcsname\relax
+\expandafter\let\csname active@char\string:\endcsname\relax
+
+\initiate@active@char{?}
+\initiate@active@char{!}
+\initiate@active@char{:}
+\makeatletter
+%%%%%%%%% Compilation error fix end %%%%%%%%%
+
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{1em}
+\setcounter{section}{0}
+
+\begin{document}
+	\begin{center}
+		{\LARGE 2. ZH feladatsor kb. (B)}
+		\smallskip
+		
+		{\large Min 33\% kell kb.}
+	\end{center}
+\section{Papíros (40p)}
+
+	\begin{enumerate}
+		\item Fogalmak
+		\begin{enumerate}
+			\item REDO ellenőrzőpont képzés lépései.
+			\item ???
+		\end{enumerate}
+	
+		\item Adatbázis helyreállítása napló alapján
+		\begin{enumerate}
+			\item Adott naplózásra(műveletek felsorolása) helyreállítás REDO alapján.
+			\item Adott naplózásra (műveletek felsorolása) helyreállítás UNDO alapján.
+		\end{enumerate}
+	
+		\item Megelőzési gráf felrajzolása adott ütemezésekre és az ütemezésekre konkurencia-ekvivalens összes soros ütemezés megadása.
+		\begin{enumerate}
+			\item Ütemezés: T1, T2, T3, T4 tranzakciókhoz tartozó műveletek sorozata (nem tranzakciók szerint sorba rendezve) pl. R1(A); R1(B); W3(B);...; W4(D)
+			\item Előzőhöz hasonló, de azért persze nem pont ugyan olyan ütemezés.
+		\end{enumerate}
+		\item Még két fogalom az elmélet listából (2. részbeli)
+		\begin{enumerate}
+			\item Konzisztens-ekvivalens
+			\item Példa holtpontra
+		\end{enumerate}
+	
+	\end{enumerate}
+
+\section{Gépes (25p)}
+	
+	\begin{enumerate}
+		\item (7p) Adott 4 tábla: nikovits.cikk, szallit, szallito, projekt. Adjuk meg azoknak a piros cikkeknek számát, melyek pécsi projektben szerepeltek.
+		\begin{enumerate}
+			\item Úgy, hogy a joinok helyett NESTED LOOP legyen és egyik tábla se legyen indexelve.
+			\item Úgy, hogy csak a cikk tábla legyen indexelve.
+		\end{enumerate}
+	
+		\item (8p) SH felhasználó tábláira adjunk alábbi felépítésű tervezetet.
+		
+		\item (10p) SH felhasználó tábláira adjunk alábbi felépítésű tervezetet. (hasonló, mint a példa, ami a honlapon szerepel a 8-as gyakhoz.)
+	\end{enumerate}
+
+\end{document}

@@ -1,0 +1,165 @@
+\documentclass[a4paper,11.5pt, table]{article}
+
+%%%%%% Basic packages begin %%%%%%
+\usepackage[
+	textwidth  = 160mm, 
+	textheight = 230mm, 
+	top        = 25mm, 
+	bottom     = 30mm
+]{geometry}
+\usepackage[normalem]{ulem}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\PassOptionsToPackage{defaults=hu-min}{magyar.ldf}
+\usepackage[magyar]{babel}
+%%%%%%% Basic packages end %%%%%%%
+
+%%%%%% Packages required for this document begin %%%%%%
+\usepackage{
+	amsmath,   % Math mode
+	amsthm,    % "note" environment
+	amsfonts,  % "\mathbb{}" command
+	paralist,  % "compactitem" and "compactenum" environment
+	multirow,  % "\multirow{}{}" command
+	float,     % "H" float specifier
+	tikz,      % Basepackage for nearly all figures
+	listings,  % Used for code snippets
+	etaremune, % Reverse compactenum
+%	graphicx   % For including images
+	enumitem   %for alphabetical enumeration
+}
+\usepackage[unicode]{hyperref} % Clickable links
+%%%%%%% Packages required for this document end %%%%%%%
+
+%%%%%% TikZ options start %%%%%%
+\usetikzlibrary{
+	positioning, % Contains positioning utilities, such as "below = of" 
+	calc,        % Adding coordinates
+	math         % Needed for global variables
+}
+
+\tikzstyle{NodeBase} = [
+	rectangle,
+	text centered,
+	draw = black
+]
+
+\definecolor{DefaultObjectColor}{gray}{0.9} % This is the default color of object in the TikZ pictures
+
+\tikzstyle{arrow} = [
+	thick,
+	->,
+	>=stealth
+]
+%%%%%%% TikZ options end %%%%%%%
+
+%%%%%% lstlistings envvironment options start %%%%%%
+
+\lstdefinestyle{customc}{ % C/C++ code snippet style
+	belowcaptionskip = 1\baselineskip,
+	breaklines       = true,
+	frame            = L, % Double line on the left
+	language         = C++,
+	showstringspaces = false,
+	basicstyle       = \ttfamily,
+	keywordstyle     = \bfseries\color{green!40!black},
+	stringstyle      = \color{orange},
+	emphstyle        = \color{blue}, % Defined below
+	tabsize          = 4,
+	columns          = fullflexible,
+}
+
+\lstset{
+	escapechar = @,
+	style      = customc, % Default code snippet style
+	%NOTE In order to use special characters in code snippets, one has to manually define them.
+	literate   = {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1	{Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1	{ö}{{\"o}}1 {ü}{{\"u}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+	{ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+	{€}{{\euro}}1 {£}{{\pounds}}1 {~}{$\sim$}{1}	
+}
+
+%%%%%%% lstlistings envvironment options end %%%%%%%
+
+%%%%%%%% Compilation error fix begin %%%%%%%%
+\makeatletter
+\expandafter\let\csname active@char\string?\endcsname\relax
+\expandafter\let\csname active@char\string!\endcsname\relax
+\expandafter\let\csname active@char\string:\endcsname\relax
+
+\initiate@active@char{?}
+\initiate@active@char{!}
+\initiate@active@char{:}
+\makeatletter
+%%%%%%%%% Compilation error fix end %%%%%%%%%
+
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{1em}
+\setcounter{section}{0}
+
+\begin{document}
+	\begin{center}
+		{\LARGE Adatbázisok II}
+		\smallskip
+		
+		{\large VI. Ellenőrzőkérdések}
+	\end{center}
+189. Milyen problémát kell megoldania a konkurrencia-vezérlésnek? (4 pont)
+	\begin{compactitem}
+		\item A tranzakciók közötti egymásra hatás az adatbázis-állapot inkonzisztenssé válását okozhatja, még akkor is, amikor a tranzakciók külön-külön megőrzik a konzisztenciát, és rendszerhiba sem történt. 
+		\item \textit{MJ.: Akkor fordulhat elő ilyen, ha két, egyszerre futó tranzakció ugyan azt az adatrészt módosítja.}
+	\end{compactitem}
+
+190. Mit hívunk ütemezőnek? (2 pont)
+	\begin{compactitem}
+		\item Az adatbázis-kezelő azon részét hívjuk ütemezőnek (scheduler), amely a tranzakciós lépések szabályozásának feladatát végzi.
+	\end{compactitem}
+
+191. Mit hívunk ütemezésnek? (2 pont)
+	\begin{compactitem}
+		\item Az ütemezés \textit{(schedule)} egy vagy több tranzakció által végrehajtott lényeges műveletek időrendben vett sorozata, amelyben az egy tranzakcióhoz tartozó műveletek sorrendje megegyezik a tranzakcióban megadott sorrenddel. 
+	\end{compactitem}
+
+192. Milyen 2 módon biztosítja az ütemező a sorbarendezhetőséget? (2 pont)
+	\begin{compactitem}
+		\item Várakoztat, abortot rendel el, hogy a sorbarendezhetőséget biztosítsa.
+	\end{compactitem}
+
+193. Mit hívunk konfliktuspárnak? (2 pont)
+	\begin{compactitem}
+		\item A konfliktus \textit{(conflict)} vagy konfliktuspár olyan egymást követő műveletpár az ütemezésben, amelynek ha a sorrendjét felcseréljük, akkor legalább az egyik tranzakció viselkedése megváltozhat.
+	\end{compactitem}
+
+194. Milyen 3 esetben nem cserélhetjük fel a műveletek sorrendjét, mert inkonzisztenciát okozhatna? (3 pont)
+\begin{compactitem}
+	\item Legyen T$_{i}$ és T$_{j}$ két különböző tranzakció (i $\not=$ j).
+	\begin{enumerate}[label= \alph*)]
+		\item r$_{i}$(X); w$_{i}$(Y) konfliktus,
+		\begin{compactitem}
+			\item M
+			ivel egyetlen tranzakción belül a műveletek sorrendje rögzített, és az adatbázis-kezelő ezt a sorrendet nem rendezheti át.
+		\end{compactitem}
+		
+		\item w$_{i}$(X); w$_{j}$(X) konfliktus, 
+		\begin{compactitem}
+			\item Mivel mind a kettőt ugyan azt az adatot módosítja. (Ha felcserélnénk őket, más lehet az eredmény.)
+		\end{compactitem}
+		
+		\item r$ _{i} $(X); w$ _{j} $(X) és w$ _{i} $(X); r$ _{j} $(X) is konfliktus. 
+		\begin{compactitem}
+			\item Ha megcserélnénk a sorrendet, egyrészt az írások miatt más lenne az olvasott adat, másrészt a felcserélt írások sorrendje miatt X értékének a 4 művelet utáni változata is megváltozhat. (És ez a csere azt is jelentené, hogy tranzakción belüli sorrendet cserélünk fel.)
+		\end{compactitem}
+	\end{enumerate}
+\end{compactitem}
+
+195. Mikor konfliktus-ekvivalens 2 ütemezés? (2 pont)
+	\begin{compactitem}
+		\item Azt mondjuk, hogy két ütemezés konfliktusekvivalens \textit{(conflict-equivalent)}, ha szomszédos műveletek nem konfliktusos cseréinek sorozatával az egyiket átalakíthatjuk a másikká. 
+	\end{compactitem}
+
+196. Mikor konfliktus-sorbarendezhető egy ütemezés? (2 pont)
+	\begin{compactitem}
+		\item Azt mondjuk, hogy egy ütemezés konfliktus-sorbarendezhető \textit{(conflict-serializable schedule)}, ha konfliktusekvivalens valamely soros ütemezéssel. 
+		\item \textit{MJ.: Azaz nem konfliktusos cserékkel átvihető az egyik a másikba.}
+	\end{compactitem}
+
+\end{document}
