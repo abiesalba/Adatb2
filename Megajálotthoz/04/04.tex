@@ -12,6 +12,7 @@
 \usepackage[T1]{fontenc}
 \PassOptionsToPackage{defaults=hu-min}{magyar.ldf}
 \usepackage[magyar]{babel}
+
 %%%%%%% Basic packages end %%%%%%%
 
 %%%%%% Packages required for this document begin %%%%%%
@@ -98,10 +99,10 @@
 
 \begin{document}
 	\begin{center}
-		{\LARGE Adatbázisok II}
+		{\Huge Adatbázisok II}
 		\smallskip
 		
-		{\large VI. Ellenőrzőkérdések}
+		{\Large VI. Ellenőrzőkérdések}
 	\end{center}
 189. Milyen problémát kell megoldania a konkurrencia-vezérlésnek? (4 pont)
 	\begin{compactitem}
@@ -162,4 +163,157 @@
 		\item \textit{MJ.: Azaz nem konfliktusos cserékkel átvihető az egyik a másikba.}
 	\end{compactitem}
 
+197. Mi a konfliktus-sorbarendezhetőség elve? (3 pont)
+	\begin{compactitem}
+		\item ELV: nem konfliktusos cserékkel az ütemezést megpróbáljuk soros ütemezéssé átalakítani. Ha ezt meg tudjuk tenni, akkor az eredeti ütemezés sorbarendezhető volt, ugyanis az adatbázis állapotára való hatása változatlan marad minden nem konfliktusos cserével.
+	\end{compactitem}
+
+198. Mi a kapcsolat a sorbarendezhetőség és a konfliktus-sorbarendezhetőség között? (2 pont)
+	\begin{compactitem}
+		\item Azt mondjuk, hogy egy ütemezés konfliktus-sorbarendezhető \textit{(conflict-serializable schedule)}, ha konfliktusekvivalens valamely soros ütemezéssel. 
+		\begin{compactitem}
+			\item Azaz nem konfliktusos cserék által valamely soros ütemezést kaphatjuk.
+		\end{compactitem}
+		
+		\item A konfliktus-sorbarendezhetőség elégséges feltétel a sorbarendezhetőségre, vagyis egy konfliktus-sorbarendezhető ütemezés sorbarendezhető ütemezés is egyben. 
+	\end{compactitem}
+
+199. Az r$ _{1} $(A); w$ _{1} $(A); r$ _{2} $(A); w$ _{2} $(A); r$ _{1} $(B); w$ _{1} $(B); r$ _{2} $(B); w$ _{2} $(B); ütemezést alakítsuk soros ütemezéssé (5 pont)
+	\begin{compactitem}
+		\item Azt állítjuk, hogy ez az ütemezés konfliktus-sorbarendezhető. A következő cserékkel ez az ütemezés átalakítható a (T$ _{1} $, T$ _{2} $) soros ütemezéssé, ahol az összes T$ _{1} $-beli művelet megelőzi az összes T$ _{2} $-beli műveletet:
+	\end{compactitem}
+\begin{figure}[h]
+	\centering
+	\includegraphics[height=3cm]{01.png}
+\end{figure}
+
+200. Adjunk példát sorbarendezhető, de nem konfliktus-sorbarendezhető ütemezésre (4 pont)
+	\begin{compactitem}
+		\item S$ _{2} $: w$ _{1} $(Y); w$ _{2} $(Y); w$ _{2} $(X); w$ _{1} $(X); w$ _{3} $(X);
+	\end{compactitem}
+
+201. Mi a konfliktus-sorbarendezhetőség tesztelésének alapötlete? (2 pont)
+	\begin{compactitem}
+		\item Alapötlet: ha valahol konfliktusban álló műveletek szerepelnek S-ben, akkor az ezeket a műveleteket végrehajtó tranzakcióknak ugyanabban a sorrendben kell előfordulniuk a konfliktus-ekvivalens soros ütemezésekben, mint ahogyan az S-ben voltak.
+	\end{compactitem}
+
+202. Mikor mondjuk, hogy egy S ütemezés alapján T$ _{1} $ megelőzi T$ _{2} $-t? (5 pont)
+	\begin{compactitem}
+		\item Adott a T$ _{1} $ és T$ _{2} $, esetleg további tranzakcióknak egy S ütemezése. Azt mondjuk, hogy T$ _{1} $ megelőzi T$ _{2} $‑t, ha van a T$ _{1} $-ben olyan A$ _{1} $ művelet és a T$ _{2} $-ben olyan A$ _{2} $ művelet, hogy
+		\begin{enumerate}
+			\item A$ _{1} $ megelőzi A$ _{2} $-t S-ben,
+			\item A$ _{1} $ és A$ _{2} $ ugyanarra az adatbáziselemre vonatkoznak, és
+			\item A$ _{1} $ és A$ _{2} $ közül legalább az egyik írás művelet.
+		\end{enumerate}
+		\item MJ.:
+		\begin{compactitem}
+			\item Másképpen fogalmazva: A$ _{1} $ és A$ _{2} $ konfliktuspárt alkotna, ha szomszédos műveletek lennének. Jelölése: T$ _{1} $ <$ _{S} $ T$ _{2} $. 
+			\item Látható, hogy ezek pontosan azok a feltételek, amikor nem lehet felcserélni A$ _{1} $ és A$ _{2} $ sorrendjét. Tehát A$ _{1} $ az A$ _{2} $ előtt szerepel bármely S-sel konfliktusekvivalens ütemezésben. Ebből az következik, hogy ha ezek közül az ütemezések közül az egyik soros ütemezés, akkor abban T$ _{1} $-nek meg kell előznie T$ _{2} $‑t.
+		\end{compactitem}
+	\end{compactitem}
+
+203. Adjuk meg egy S ütemezéshez tartozó megelőzési gráf definícióját! (5 pont)
+	\begin{compactitem}
+		\item Az utóbbi kérdésnél leírt megelőzéseket a megelőzési gráfban \textit{(precedence graph)} összegezhetjük. A megelőzési gráf csúcsai az S ütemezés tranzakciói. Ha a tranzakciókat T$ _{i} $-vel jelöljük, akkor a T$ _{i} $-nek megfelelő csúcsot az i egész jelöli. Az i csúcsból a j csúcsba akkor vezet irányított él, ha T$ _{i} $ <S T$ _{j} $.
+	\end{compactitem}
+
+204. Milyen kapcsolat van a konfliktus-ekvivalencia és a megelőzési gráfok között? (4 pont)
+	\begin{compactitem}
+		\item Lemma: S$ _{1} $, S$ _{2} $ konfliktusekvivalens $ \implies $ gráf(S$ _{1} $) = gráf(S$ _{2} $)
+		\item Megjegyzés: gráf(S$ _{1} $) = gráf(S$ _{2} $) $ \not\Rightarrow $ S$ _{1} $, S$ _{2} $ konfliktusekvivalens
+	\end{compactitem}
+
+205. Adjunk példát arra, hogy két ütemezés megelőzési gráfja megegyezik, de nem konfliktus-ekvivalensek!(4 pont)
+	\begin{compactitem}
+		\item Ellenpélda:
+		\begin{compactitem}
+			\item S$ _{1} $=w$ _{1} $(A) r$ _{2} $(A) w$ _{2} $(B) r$ _{1} $(B)
+			\item S$ _{2} $=r$ _{2} $(A) w$ _{1} $(A) r$ _{1} $(B) w$ _{2} $(B)
+		\end{compactitem}
+			\begin{figure}[h]
+				\centering
+				\includegraphics[height=3cm]{02.png}
+			\end{figure}
+	\end{compactitem}
+
+
+206. Mit hívunk egy irányított, körmentes gráf esetében a csúcsok topologikus sorrendjének? (4 pont)
+	\begin{compactitem}
+		\item Egy körmentes gráf csúcsainak topologikus sorrendje a csúcsok bármely olyan rendezése, amelyben minden \textit{a $ \rightarrow $ b} élre az \textit{a} csúcs megelőzi a \textit{b} csúcsot a topologikus rendezésben.
+	\end{compactitem}
+
+207. Hogyan lehet tesztelni a megelőzési gráf alapján egy ütemezés konfliktus-sorbarendezhetőségét? (4 pont)
+	\begin{compactitem}
+		\item Ha az S megelőzési gráf tartalmaz irányított kört, akkor S nem konfliktus-sorbarendezhető, ha nem tartalmaz irányított kört, akkor S konfliktus-sorbarendezhető, és a csúcsok bármelyik topologikus sorrendje megadja a konfliktusekvivalens soros sorrendet.
+	\end{compactitem}
+
+208. Mi jellemző a passzív ütemezésre? (4 pont)
+	\begin{compactitem}
+		\item \textit{MJ.: A passzív ütemezés az ütemező egy eszköze a sorbarendezhetőség elérésére.}
+		\item Passzív módszer: 
+		\begin{enumerate}
+			\item hagyjuk a rendszert működni, 
+			\item az ütemezésnek megfelelő gráfot tároljuk, 
+			\item egy idő után megnézzük, hogy van-e benne kör, 
+			\item és ha nincs, akkor szerencsénk volt, jó volt az ütemezés.
+		\end{enumerate}
+	\end{compactitem}
+
+209. Mi jellemző az aktív ütemezésre és milyen 3 módszert lehet erre használni? (5 pont)
+	\begin{compactitem}
+		\item \textit{MJ.: Az aktív ütemezés az ütemező egy eszköze a sorbarendezhetőség elérésére.}
+		\item Aktív módszer: az ütemező beavatkozik, és megakadályozza, hogy kör alakuljon ki. 
+		\item Az ütemezőnek több lehetősége is van arra, hogy kikényszerítse a sorbarendezhető ütemezéseket:
+		\begin{compactitem}
+			\item zárak (ezen belül is még: protokoll elemek, pl. 2PL)
+			\item időbélyegek (time stamp)
+			\item érvényesítés
+		\end{compactitem}
+		\item \textit{Fő elv: inkább legyen szigorúbb és ne hagyjon lefutni egy olyan ütemezést, ami sorbarendezhető, mint hogy fusson egy olyan, ami nem az.}
+	\end{compactitem}
+
+\section{Zárak használata}
+
+210. Mit hívunk a tranzakciók konzisztenciájának zárolási ütemező esetén? (2 pont)
+	\begin{compactitem}
+		\item \textit{MJ:: A zárolási ütemező a konfliktus-sorbarendezhetőséget követeli meg, (ez erősebb követelmény, mint a sorbarendezhetőség).}
+		\item Tranzakciók konzisztenciája (consistency of transactions):
+		\begin{compactitem}
+			\item A tranzakció csak akkor olvashat vagy írhat egy elemet, ha már korábban zárolta azt, és még nem oldotta fel a zárat.
+			\item Ha egy tranzakció zárol egy elemet, akkor később azt fel kell szabadítania.
+		\end{compactitem}
+	\end{compactitem}
+	
+211. Mit hívunk a zárolási ütemező jogszerűségének? (1 pont)
+	\begin{compactitem}
+		\item Az ütemezések jogszerűsége\textit{ (legality of schedules)}: 
+		Nem zárolhatja két tranzakció ugyanazt az elemet, csak úgy, ha az egyik előbb már feloldotta a zárat.
+	\end{compactitem}
+
+212. Adjunk példát konzisztens tranzakciók jogszerű ütemezésére, ami mégsem sorbarendezhető! (6 pont)
+	\begin{compactitem}
+		\item Ez az ütemezés jogszerű, de nem sorba rendezhető. 
+		\begin{figure}[h]
+			\centering
+			\includegraphics[height=6cm]{03.png}
+		\end{figure}
+		
+		\item Megjegyzés:
+		\begin{compactitem}
+			\item Kibővítjük a jelöléseinket a zárolás és a feloldás műveletekkel:
+			\begin{compactitem}
+				\item l$ _{i} $(X): a T$ _{i} $ tranzakció az X adatbáziselemre zárolást kér (lock).
+				\item u$ _{i} $(X): a T$ _{i} $ tranzakció az X adatbáziselem zárolását feloldja (unlock).
+			\end{compactitem}
+		\item Konzisztencia: Ha egy T$ _{i} $ tranzakcióban van egy r$ _{i} $(X) vagy egy w$ _{i} $(X) művelet, akkor van korábban egy l$ _{i} $(X) művelet, és van később egy u$ _{i} $(X) művelet, de a zárolás és az írás/olvasás között nincs u$ _{i} $(X).\\
+		T$ _{i} $:  … l$ _{i} $(X) … r/w$ _{i} $(X) … u$ _{i} $(X) ...
+		\end{compactitem}
+	\end{compactitem}
+
+213. Mit hívunk kétfázisú zárolásnak és szemléltessük rajzban is? (2 pont)
+	\begin{compactitem}
+		\item 
+	\end{compactitem}
+	
+		
 \end{document}
