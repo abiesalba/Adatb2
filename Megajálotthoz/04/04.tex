@@ -526,50 +526,152 @@ Bevezetés:
 	\end{compactitem}
 		
 233. Hierarchikus adatok esetén miért vezetjük be az SIX zártípust és mi jellemző rá? (4 pont)
- 100. oldal 2. és 3. pont.
+	\begin{compactitem}
+		\item IS<IX és S<X, de IX és S nem összehasonlítható (< csak parciális rendezés).
+		\item A csoportos mód használatához vezessünk be egy SIX új zárat, (ami azt jelenti, hogy ugyanaz a tranzakció S és IX zárat is tett egy adatelemre). Ekkor SIX mindkettőnél erősebb, de ez a legkisebb ilyen.
+	\end{compactitem}		
  
 234. Adjuk meg a csoportos móddal kiegészített figyelmeztető zárakra vonatkozó kompatibilitási mátrixot! (5 pont)
- 102. oldal mátrixa, T igen, F nem.
+	\begin{compactitem}
+		\begin{figure}[h]
+			\centering
+			\includegraphics[height=4cm]{14.png}
+		\end{figure}
+		\item T \textit{(true)} = igen.
+		\item F \textit{(false)} = nem.
+	\end{compactitem}
+
+\subsection{Nem ismételhető olvasás és a fantomok}
 
 235. Mit hívunk nem ismételhető olvasásnak és mi a probléma vele? (4 pont)
-  108. oldal első 4 pontja.
+	\begin{compactitem}
+		\item Tegyük fel, hogy van egy T$ _{1} $ tranzakció, amely egy adott feltételnek eleget tevő sorokat válogat ki egy relációból. Ezután hosszas számításba kezd, majd később újra végrehajtja a fenti lekérdezést. 
+		\item Tegyük fel továbbá, hogy a lekérdezés két végrehajtása között egy T$ _{2} $ tranzakció módosít vagy töröl a táblából néhány olyan sort, amely eleget tesz a lekérdezés feltételének. 
+		\item A T$ _{1} $ tranzakció lekérdezését ilyenkor nem ismételhető (fuzzy) olvasásnak nevezzük. 
+		\item A nem ismételhető olvasással az a probléma, hogy mást eredményez a lekérdezés másodszori végrehajtása, mint az első. 
+		\item\textit{ Megjegyzés:} A tranzakció viszont elvárhatja (ha akarja), hogy ha többször végrehajtja ugyanazt a lekérdezést, akkor mindig ugyanazt az eredményt kapja.
+	\end{compactitem}
 
 236. Mit hívunk fantom soroknak? (3 pont)
-109. oldal teljesen.
+	\begin{compactitem}
+		\item Ugyanez a helyzet akkor is, ha a T$ _{2} $ tranzakció beszúr olyan sorokat, amelyek eleget tesznek a lekérdezés feltételének. A lekérdezés másodszori futtatásakor most is más eredményt kapunk, mint az első alkalommal. 
+		Ennek az az oka, hogy most olyan sorokat is figyelembe kellett venni, amelyek az első futtatáskor még nem is léteztek. 
+		Az ilyen sorokat nevezzük fantomoknak (phantom).
+	\end{compactitem}
 237. Mikor követi egy tranzakció a faprotokollt? Adjuk meg a faprotokoll 4 szabályát! (4 pont)
-http://people.inf.elte.hu/kiss/15ab2/konkurencia.ppt 121. oldal tétel fölötti kék rész teljesen.
+	\begin{compactitem}
+		\item A Ti tranzakció követi a faprotokollt, ha
+		\begin{enumerate}
+			\item Az első zárat bárhova elhelyezheti.
+			\item A későbbiekben azonban csak akkor kaphat zárat A-n, ha ekkor zárja van A apján.
+			\item Zárat bármikor fel lehet oldani (nem 2PL).
+			\item Nem lehet újrazárolni, azaz ha Ti elengedte egy A adategység zárját, akkor később nem kérhet rá újra (még akkor sem, ha A apján még megvan a zárja).
+		\end{enumerate}
+	\end{compactitem}		
 
 238. Hierarchiák, például B*-fa elemeinek zárolása esetén milyen feltétel adható az ütemezés sorbarendezhetőségére? (4 pont)
- 121. oldal tétel pontosan kimondva (az is kell, hogy jogszerű az ütemezés!).
+	\begin{compactitem}
+		\item Tétel: Ha minden tranzakció követi a faprotokollt egy jogszerű ütemezésben, akkor az ütemezés sorbarendezhető lesz, noha nem feltétlenül lesz 2PL.
+	\end{compactitem}
+
+\section{Konkurenciavezérlés időbélyegzőkkel}
+
+Bevezetés:
+	\begin{compactitem}
+		\item Eddig a zárakkal kényszerítettük ki a sorbarendezhető ütemezést.
+		\item Itt két másik módszerről lesz szó a tranzakciók sorbarendezhetőségének biztosítására: időbélyegzés és érvényesítés.
+	\end{compactitem}		
 
 239. Mi az időbélyegzési módszer lényege? Használunk-e ilyenkor zárakat? (4 pont)
- 131. oldal Időbélyegzés két alpontja pontosan. Nem használunk zárakat.
+	\begin{compactitem}
+		\item Minden tranzakcióhoz hozzárendelünk egy „időbélyegzőt”. 
+		\item Minden adatbáziselem utolsó olvasását és írását végző tranzakció időbélyegzőjét rögzítjük, és összehasonlítjuk ezeket az értékeket, hogy biztosítsuk, hogy a tranzakciók időbélyegzőinek megfelelő soros ütemezés ekvivalens legyen a tranzakciók aktuális ütemezésével.
+		\item Ehhez nem használunk zárakat.
+	\end{compactitem}		
 
 240. Adjunk meg három jellemzőt az Oracle konkurenciavezérlésére vonatkozóan! (3 pont)
- 174. oldal utolsó pontja.
+	\begin{compactitem}
+		\item Az Oracle alkalmazza a kétfázisú zárolást, a figyelmeztető protokollt és a többváltozatú időbélyegzőket is némi módosítással.
+	\end{compactitem}
 
 241. Milyen olvasási konzisztenciát biztosít az Oracle és mivel éri ezt el? (3 pont)
- 175. oldal piros elnevezések és 176. oldal 1. pontja.
+	\begin{compactitem}
+		\item Többszintű konkurenciavezérlés Oracle-ben
+		\begin{itemize}
+			\item Utasítás szintű olvasási konzisztencia:
+			\begin{compactitem}
+				\item Az Oracle minden lekérdezés számára biztosítja az olvasási konzisztenciát, azaz a lekérdezés által olvasott adatok egy időpillanatból (a lekérdezés kezdetének pillanatából) származnak. 
+				\item Emiatt a lekérdezés sohasem olvas piszkos adatot, és nem látja azokat a változtatásokat sem, amelyeket a lekérdezés végrehajtása alatt véglegesített tranzakciók eszközöltek. 
+			\end{compactitem}
+			
+			\item Tranzakció szintű olvasási konzisztencia: Kérhetjük egy tranzakció összes lekérdezése számára is a konzisztencia biztosítását. 
+			\begin{compactitem}
+				\item Ezt úgy érhetjük el, hogy a tranzakciót sorba rendezhető 
+				\item vagy csak olvasás módban futtatjuk. 
+				\item Ekkor a tranzakció által tartalmazott összes lekérdezés a tranzakció indításakor fennálló adatbázis-állapotot látja, kivéve a tranzakció által korábban végrehajtott módosításokat.
+			\end{compactitem}
+		
+			\item A kétféle olvasási konzisztencia eléréséhez az Oracle a rollback szegmensekben található információkat használja fel. 		
+		\end{itemize}
+	\end{compactitem}
 
 242. Adjuk meg az SQL92 ANSI/ISO szabványbanszereplő tranzakciós elkülönítési szinteket! (4 pont)
- 179. oldal táblázat első oszlopa.
+	\begin{compactitem}
+		\item Nem olvasásbiztos.
+		\item Olvasásbiztos.
+		\item Megismételhető olvasás.
+		\item Sorba-rendezhető.
+	\end{compactitem}
 
 243. Mi jellemező a nem olvasásbiztos elkülönítési szintre a piszkos, fantom, nem ismételhető olvasásokra vonatkozóan? (3 pont)
-179. oldal táblázat első sora.
+	\begin{compactitem}
+		\item Piszkos olvasás: lehetséges.
+		\item Nem ismételhető olvasás: lehetséges.
+		\item Fantomok olvasása: lehetséges.
+	\end{compactitem}
 
 244. Mi jellemző az olvasásbiztos elkülönítési szintre a piszkos, fantom, nem ismételhető olvasásokra vonatkozóan? (3 pont)
-179. oldal táblázat második sora.
+	\begin{compactitem}
+		\item Piszkos olvasás: nem lehetséges.
+		\item Nem ismételhető olvasás: lehetséges.
+		\item Fantomok olvasása: lehetséges.
+	\end{compactitem}
 
 245. Mi jellemző a megismételhető olvasás elkülönítési szintre a piszkos, fantom, nem ismételhető olvasásokra vonatkozóan? (3 pont)
-179. oldal táblázat harmadik sora.
+	\begin{compactitem}
+	\item Piszkos olvasás: nem lehetséges.
+	\item Nem ismételhető olvasás: nem lehetséges.
+	\item Fantomok olvasása: lehetséges.
+\end{compactitem}
 
 246. Mi jellemző a sorbarendezhető elkülönítési szintre a piszkos, fantom, nem ismételhető olvasásokra vonatkozóan? (3 pont)
- 179. oldal táblázat negyedik sora.
+	\begin{compactitem}
+	\item Piszkos olvasás: nem lehetséges.
+	\item Nem ismételhető olvasás: nem lehetséges.
+	\item Fantomok olvasása: nem lehetséges.
+\end{compactitem}
 
 247. Milyen DML szintű zárakat használ az Oracle? (2 pont)
- 185. oldal középső pont két alpontjával.
+	\begin{compactitem}
+		\item \textit{Megjegyzés:} DML-zárak (adatzárak): az adatok védelmére szolgálnak.
+		\item DML-zárakat két szinten kaphatnak a tranzakciók: 
+		\begin{compactitem}
+			\item sorok szintjén 
+			\item és teljes táblák szintjén. 
+		\end{compactitem}
+	\end{compactitem}
 
 248. Milyen zártípusokat használ az Oracle sorokra és táblákra? (6 pont)
-185. oldal utolsó pont és 187. oldal utolsó előtti pont 5 alpontja.
+	\begin{compactitem}
+		\item Sorok szintjén csak egyféle zármód létezik, a kizárólagos (írási – X). 
+		\item Táblák szintjén ötféle zármódot különböztetünk meg: 
+		\begin{enumerate}
+			\item row share (RS) vagy subshare (SS), 
+			\item row exclusive (RX) vagy subexclusive (SX), 
+			\item share (S), 
+			\item share row exclusive (SRX) vagy share-subexclusive (SSX) 
+			\item és exclusive (X).
+		\end{enumerate}
+	\end{compactitem}
 
 \end{document}
