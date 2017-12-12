@@ -104,6 +104,9 @@
 		
 		{\Large VI. Ellenőrzőkérdések}
 	\end{center}
+
+\section{A konkurenciavezérlés}
+
 189. Milyen problémát kell megoldania a konkurrencia-vezérlésnek? (4 pont)
 	\begin{compactitem}
 		\item A tranzakciók közötti egymásra hatás az adatbázis-állapot inkonzisztenssé válását okozhatja, még akkor is, amikor a tranzakciók külön-külön megőrzik a konzisztenciát, és rendszerhiba sem történt. 
@@ -166,6 +169,7 @@
 197. Mi a konfliktus-sorbarendezhetőség elve? (3 pont)
 	\begin{compactitem}
 		\item ELV: nem konfliktusos cserékkel az ütemezést megpróbáljuk soros ütemezéssé átalakítani. Ha ezt meg tudjuk tenni, akkor az eredeti ütemezés sorbarendezhető volt, ugyanis az adatbázis állapotára való hatása változatlan marad minden nem konfliktusos cserével.
+		\item \textit{Megjegyzés: Két tranzakciónak két soros ütemezése van, az egyikben T$ _{1} $ megelőzi T$ _{2} $‑t, a másikban T$ _{2} $ előzi meg T$ _{1} $-et.}
 	\end{compactitem}
 
 198. Mi a kapcsolat a sorbarendezhetőség és a konfliktus-sorbarendezhetőség között? (2 pont)
@@ -232,7 +236,7 @@
 		\end{compactitem}
 			\begin{figure}[h]
 				\centering
-				\includegraphics[height=3cm]{02.png}
+				\includegraphics[height=2cm]{02.png}
 			\end{figure}
 	\end{compactitem}
 
@@ -305,15 +309,267 @@
 				\item l$ _{i} $(X): a T$ _{i} $ tranzakció az X adatbáziselemre zárolást kér (lock).
 				\item u$ _{i} $(X): a T$ _{i} $ tranzakció az X adatbáziselem zárolását feloldja (unlock).
 			\end{compactitem}
-		\item Konzisztencia: Ha egy T$ _{i} $ tranzakcióban van egy r$ _{i} $(X) vagy egy w$ _{i} $(X) művelet, akkor van korábban egy l$ _{i} $(X) művelet, és van később egy u$ _{i} $(X) művelet, de a zárolás és az írás/olvasás között nincs u$ _{i} $(X).\\
-		T$ _{i} $:  … l$ _{i} $(X) … r/w$ _{i} $(X) … u$ _{i} $(X) ...
+			\item Konzisztencia: Ha egy T$ _{i} $ tranzakcióban van egy r$ _{i} $(X) vagy egy w$ _{i} $(X) művelet, akkor van korábban egy l$ _{i} $(X) művelet, és van később egy u$ _{i} $(X) művelet, de a zárolás és az írás/olvasás között nincs u$ _{i} $(X).\\
+			T$ _{i} $:  … l$ _{i} $(X) … r/w$ _{i} $(X) … u$ _{i} $(X) ...
+			 \item Példa konzisztens tranzakciókra:
+			 \begin{figure}[h]
+			 	\centering
+			 	\includegraphics[height=3cm]{04.png}
+			 \end{figure}			 
 		\end{compactitem}
 	\end{compactitem}
 
 213. Mit hívunk kétfázisú zárolásnak és szemléltessük rajzban is? (2 pont)
 	\begin{compactitem}
-		\item 
+		\item A kétfázisú zárolás\textit{ (two-phase locking, 2PL)}:
+		\begin{compactitem}
+			\item Szemléletesen:
+			\begin{figure}[h]
+				\centering
+				\includegraphics[height=2cm]{05.png}
+			\end{figure}
+		\item Példa:
+			\begin{figure}[h]
+				\centering
+				\includegraphics[height=3cm]{06.png}
+			\end{figure}
+			\item Minden \underline{tranzakcióban} minden zárolási művelet megelőzi az összes zárfeloldási műveletet. (Amíg a műveletei az adott adatot változtatják, addig nem engedi el azt.)
+		\end{compactitem}
+	\end{compactitem}
+
+214. Adjunk a tranzakciókra 2, az ütemezésre 1 feltételt, ami elegendő a konfliktus-sorbarendezhetőség bizonyítására! Milyen módon bizonyítható a tétel? (5 pont)
+	\begin{compactitem}
+		\item Tétel: Konzisztens, kétfázisú zárolású tranzakciók bármely S jogszerű ütemezését át lehet alakítani konfliktusekvivalens soros ütemezéssé. 
+		\item Bizonyítás: S-ben részt vevő tranzakciók száma (n) szerinti indukcióval. 		
 	\end{compactitem}
 	
+\subsection{A holtpont}
+	
+215. Mi a várakozási gráf és hogyan segít a holtpont felismerésében? (4 pont)
+	\begin{compactitem}
+		\item \textit{A holtpont: amikor egyik tranzakció sem folytatódhat, hanem örökké várakozniuk kell.} 
+		\begin{figure}[h]
+			\centering
+			\includegraphics[height=4cm]{07.png}
+		\end{figure}
+		\item Várakozási gráf: csúcsai a tranzakciók és akkor van él T$ _{i} $-ből T$ _{j} $-be, ha T$ _{i} $ vár egy olyan zár elengedésére, amit Tj tart éppen.
+		\item Tétel: Az ütemezés során egy adott pillanatban pontosan akkor nincs holtpont, ha az adott pillanathoz tartozó várakozási gráfban nincs irányított kör.		
+	\end{compactitem}
 		
+216. Milyen két lehetőséggel védekezhetünk a holtpont ellen? (4 pont)
+	\begin{enumerate}[label = \alph*)]
+		\item Minden egyes tranzakció előre elkéri az összes zárat, ami neki kelleni fog. Ha nem kapja meg az összeset, akkor egyet se kér el, el se indul.
+		Ilyenkor biztos nem lesz holtpont, mert ha valaki megkap egy zárat, akkor le is tud futni, nem akad el. Az csak a baj ezzel, hogy előre kell mindent tudni.
+		\item Feltesszük, hogy van egy sorrend az adategységeken és minden egyes tranzakció csak eszerint a sorrend szerint növekvően kérhet újabb zárakat. Itt lehet, hogy lesz várakozás, de holtpont biztos nem lesz. Miért?
+	\end{enumerate}
+
+217. Mi a kiéheztetés problémája és milyen megoldás van rá? (2 pont)
+	\begin{compactitem}
+		\item Kiéhezés: többen várnak ugyanarra a
+		zárra, de amikor felszabadul mindig elviszi valaki a tranzakció orra elől.
+		\item Megoldás: adategységenként FIFO listában tartani a várakozókat, azaz mindig a legrégebben várakozónak adjuk oda a zárolási lehetőséget.		
+	\end{compactitem}
+
+\subsection{Oszott és kizárólagos zárak}
+
+Bevezetés:
+	\begin{compactitem}
+		\item A legelterjedtebb zárolási séma két különböző zárat alkalmaz: az osztott zárakat\textit{ (shared locks)} vagy olvasási zárakat, és a kizárólagos zárakat\textit{ (exclusive locks)} vagy írási zárakat. 
+		\item Tetszőleges X adatbáziselemet vagy egyszer lehet zárolni kizárólagosan, vagy akárhányszor lehet zárolni osztottan, ha még nincs kizárólagosan zárolva. 
+		\item Amikor írni akarjuk X-et, akkor X-en kizárólagos zárral kell rendelkeznünk, de ha csak olvasni akarjuk, akkor X-en akár osztott, akár kizárólagos zár megfelel. 
+		\item Feltételezzük, hogy ha olvasni akarjuk X-et, de írni nem, akkor előnyben részesítjük az osztott zárolást.
+		\item Jelölések:
+		\begin{compactitem}
+			\item sl$ _{i} $(X): T$ _{i} $ tranzakció osztott zárat kér az X adatbáziselemre.
+			\item xl$ _{i} $(X): T$ _{i} $ kizárólagos zárat kér X-re.
+			\item u$ _{i} $(X): T$ _{i} $ felszabadítja X-et minden zár alól.
+		\end{compactitem}
+	\end{compactitem}
+
+218. Osztott és kizárólagos zárak esetén mit hívunk a tranzakció konzisztenciájának? (2 pont)
+	\begin{compactitem}
+		\item Nem írhatunk kizárólagos zár fenntartása nélkül, és nem olvashatunk valamilyen zár fenntartása nélkül. 
+		\item Minden zárolást követnie kell egy ugyanannak az elemnek a zárolását feloldó műveletnek.
+	\end{compactitem}
+
+219. Osztott és kizárólagos zárak esetén mit hívunk az ütemezés jogszerűségének? (2 pont)
+	\begin{compactitem}
+		\item Az ütemezések jogszerűsége: Egy elemet vagy egyetlen tranzakció zárol kizárólagosan, vagy több is zárolhatja osztottan, de a kettő egyszerre nem lehet. 
+	\end{compactitem}
+
+220. Osztott és kizárólagos zárak esetén adjunk meg feltételeket az ütemezés konfliktus-sorbarendezhetőségére? (4 pont)
+	\begin{compactitem}
+		\item Konzisztens 2PL (2 fázisú) tranzakciók jogszerű ütemezése konfliktus-sorbarendezhető.
+	\end{compactitem}
+
+\subsection{Kompatibilitási mátrixok}
+
+221. Osztott és kizárólagos zárak esetén adjuk meg a kompatibilitási mátrixot!(4 pont)
+	\begin{compactitem}
+		\item Megjegyzés:
+		\begin{compactitem}
+			\item A kompatibilitási mátrix minden egyes zármódhoz rendelkezik egy-egy sorral és egy-egy oszloppal. 
+			\item A sorok egy másik tranzakció által az X elemre elhelyezett záraknak, az oszlopok pedig az X-re kért zármódoknak felelnek meg. 
+			\item A kompatibilitási mátrix használatának szabálya:
+			Egy A adatbáziselemre C módú zárat akkor és csak akkor engedélyezhetünk, ha a táblázat minden olyan R sorára, amelyre más tranzakció már zárolta A-t R módban, a C oszlopban „igen” szerepel.
+		\end{compactitem}
+		\item Az osztott (S) és kizárólagos (X) zárak kompatibilitási mátrixa:
+		\begin{figure}[h]
+			\centering
+			\includegraphics[height=2cm]{08.png}
+		\end{figure}
+	\end{compactitem}
+
+\newpage
+222. Többmódú zárak kompatibilitási mátrixa segítségével hogyan definiáljuk a megelőzési gráfot? (5 pont)
+	\begin{compactitem}
+		\item A megelőzési gráf csúcsai a tranzakciók és akkor van él T$ _{i} $-ből T$ _{j} $-be, ha van olyan A adategység, amelyre az ütemezés során Z$ _{k} $ zárat kért és kapott T$ _{i} $ ezt elengedte, majd
+		\item Ezután A-ra legközelebb T$ _{j} $ kért és kapott olyan Z$ _{l} $ zárat, hogy a mátrixban a Z$ _{k} $ sor Z$ _{l} $ oszlopában \textit{Nem} áll.
+	\end{compactitem}
+			
+223. Többmódú zárak esetén a megelőzési gráf segítségével hogy lehet eldönteni a sorbarendezhetőséget? (3 pont)
+	\begin{compactitem}
+		\item Tétel: Egy csak zárkéréseket és zárelengedéseket tartalmazó jogszerű ütemezés sorbarendezhető akkor és csak akkor, ha a kompatibilitási mátrix alapján felrajzolt megelőzési gráf nem tartalmaz irányított kört.
+	\end{compactitem}
+
+224. Adjunk példát arra, hogy egy zárolási ütemező elutasít sorbarendezhető ütemezést? (4 pont)
+	\begin{compactitem}
+		\item Tekintsük a következő ütemezést:
+		\begin{figure}[h]
+			\centering
+			\includegraphics[height=0.5cm]{09.png}
+		\end{figure}
+		\item Ha megnézzük az írás/olvasás műveleteket (r$ _{1} $(A); r$ _{2} $(A); w$ _{1} $(A); r$ _{2} $(B)), akkor látszik, hogy az ütemezés hatása azonos a T$ _{2} $T$ _{1} $ soros ütemezés hatásával, vagyis ez egy sorbarendezhető ütemezés zárak nélkül.
+		\item De ha felrajzoljuk a zárakra vonatkozó megelőzési gráfot (és ilyenkor persze nem nézzük, hogy milyen írások/olvasások vannak, hanem a legrosszabb esetre készülünk), akkor az irányított kört tartalmaz, akkor ezt elvetnénk, mert nem lesz sorbarendezhető az az ütemezés, amiben már
+		csak a zárak vannak benne.
+		\begin{figure}[h]
+			\centering
+			\includegraphics[height=2cm]{10.png}
+		\end{figure}
+	\end{compactitem}
+
+225. Adjunk feltételt az ütemezés sorbarendezhetőségére tetszőleges zármodellben! (4 pont)
+	\begin{compactitem}
+		\item Tétel: Ha valamilyen zármodellben egy jogszerű ütemezésben minden tranzakció követi a 2PL-t, akkor az ütemezéshez tartozó megelőzési gráf nem tartalmaz irányított kört, azaz az ütemezés sorbarendezhető.
+	\end{compactitem}
+
+226. Mikor mondjuk, hogy egyik zár erősebb a másiknál? (4 pont)
+	\begin{compactitem}
+		\item L$ _{2} $ erősebb L$ _{1} $ zárnál, ha a kompatibilitási mátrixban L$ _{2} $ sorában /oszlopában minden olyan pozícióban „NEM” áll, amelyben L$ _{1} $ sorában /oszlopában „NEM” áll. 
+	\end{compactitem}
+
+227. Adjuk meg a módosítási zár kompatibilitási mátrixát és értelmezzük röviden!(4 pont)
+	\begin{compactitem}
+		\item\textit{ Megjegyzés: Módosítási zár}
+		\begin{compactitem}
+			\item Az ul$ _{i} $(X) módosítási zár a T$ _{i} $ tranzakciónak csak X olvasására ad jogot, X írására nem. Később azonban csak a módosítási zárat lehet felminősíteni írásira, az olvasási zárat nem (azt csak módosításira). 
+			\item A módosítási zár tehát nem csak a holtpontproblémát oldja meg, hanem a kiéheztetés problémáját is.			
+		\end{compactitem}
+		\item Az U módosítási zár úgy néz ki, mintha osztott zár lenne, amikor kérjük, és úgy néz ki, mintha kizárólagos zár lenne, amikor már megvan: 
+		\begin{figure}[h]
+			\centering
+			\includegraphics[height=3cm]{11.png}
+		\end{figure}
+	\end{compactitem}
+
+228. Mi az inc$ _{i} $(X)művelet és adjuk meg a növelési zár kompatibilitási mátrixát! (4 pont)
+	\begin{compactitem}
+		\item Az inc$ _{i} $(X) művelet:
+		\begin{compactitem}
+			\item A Ti tranzakció megnöveli az X adatbáziselemet valamely konstanssal. 
+			\item (Annak, hogy pontosan mennyi ez a konstans, nincs jelentősége.)
+		\end{compactitem}
+		\item MJ.: A műveletnek megfelelő növelési zárat \textit{(increment lock)} il$ _{i} $(X)-szel jelöljük.
+		\item Növelési zárak:
+		\begin{figure}[h]
+			\centering
+			\includegraphics[height=3cm]{12.png}
+		\end{figure}
+	\end{compactitem}
+
+229. Adjunk meg a zártábla egy lehetséges formáját, a mezők tartalmát magyarázzuk is el! (8 pont)
+
+230. A zárfeloldások sorrendje milyen elvek alapján történhet? (3 pont)
+	\begin{compactitem}
+		\item Több különböző megközelítés lehetséges, mindegyiknek megvan a saját előnye:
+		\begin{enumerate}
+			\item Első beérkezett első kiszolgálása \textit{(first-come-first-served)}: \\
+			Azt a zárolási kérést engedélyezzük, amelyik a legrégebb óta várakozik. Ez a stratégia azt biztosítja, hogy ne legyen kiéheztetés, vagyis a tranzakció ne várjon örökké egy zárra.
+			\item Elsőbbségadás az osztott záraknak \textit{(priority to shared locks)}:\\
+			 Először az összes várakozó osztott zárat engedélyezzük. Ezután egy módosítási zárolást engedélyezünk, ha várakozik ilyen. A kizárólagos zárolást csak akkor engedélyezzük, ha semmilyen más igény nem várakozik. Ez a stratégia csak akkor engedi a kiéheztetést, ha a tranzakció U vagy X zárolásra vár.
+			\item Elsőbbségadás a felminősítésnek \textit{(priority to upgrading)}:\\
+			 Ha van olyan U zárral rendelkező tranzakció, amely X zárrá való felminősítésre vár, akkor ezt engedélyezzük előbb. Máskülönben a fent említett stratégiák valamelyikét követjük.
+		\end{enumerate}
+	\end{compactitem}
+		
+231. Hierarchikus adatok esetén mi a figyelmeztető zárak használatának három alapelve? (3 pont)
+	\begin{compactitem}
+		\item \textit{Megjegyzés: A figyelmeztető protokoll  zárjai (warning protocol):}
+		\begin{compactitem}
+			\item A közönséges zárak: S és X (osztott és kizárólagos), 
+			\item Figyelmeztető zárak: IS, IX (I=intention)\\
+			Például IS azt jelenti, hogy szándékunkban áll osztott zárat kapni egy részelemen. 
+		\end{compactitem}
+		\item A kért zárnak megfelelő figyelmeztető zárakat kérünk az útvonal mentén a gyökérből kiindulva az adatelemig. 
+		\item Addig nem megyünk lejjebb, amíg a figyelmeztető zárat meg nem kapjuk.
+		\item Így a konfliktusos helyzetek alsóbb szintekre kerülnek a fában.		
+	\end{compactitem}
+
+232. Hierarchikus adatok esetén adjuk meg az osztott, kizárólagos és figyelmeztető zárakra vonatkozó kompatibilitási mátrixot? (4 pont)
+	\begin{compactitem}
+		\begin{figure}[h]
+			\centering
+			\includegraphics[height=4cm]{13.png}
+		\end{figure}
+		\item Oszlop: Megkaphatjuk-e ezt a típusú zárat?
+		\item Sor: Ha ilyen zár van már kiadva.
+	\end{compactitem}
+		
+233. Hierarchikus adatok esetén miért vezetjük be az SIX zártípust és mi jellemző rá? (4 pont)
+ 100. oldal 2. és 3. pont.
+ 
+234. Adjuk meg a csoportos móddal kiegészített figyelmeztető zárakra vonatkozó kompatibilitási mátrixot! (5 pont)
+ 102. oldal mátrixa, T igen, F nem.
+
+235. Mit hívunk nem ismételhető olvasásnak és mi a probléma vele? (4 pont)
+  108. oldal első 4 pontja.
+
+236. Mit hívunk fantom soroknak? (3 pont)
+109. oldal teljesen.
+237. Mikor követi egy tranzakció a faprotokollt? Adjuk meg a faprotokoll 4 szabályát! (4 pont)
+http://people.inf.elte.hu/kiss/15ab2/konkurencia.ppt 121. oldal tétel fölötti kék rész teljesen.
+
+238. Hierarchiák, például B*-fa elemeinek zárolása esetén milyen feltétel adható az ütemezés sorbarendezhetőségére? (4 pont)
+ 121. oldal tétel pontosan kimondva (az is kell, hogy jogszerű az ütemezés!).
+
+239. Mi az időbélyegzési módszer lényege? Használunk-e ilyenkor zárakat? (4 pont)
+ 131. oldal Időbélyegzés két alpontja pontosan. Nem használunk zárakat.
+
+240. Adjunk meg három jellemzőt az Oracle konkurenciavezérlésére vonatkozóan! (3 pont)
+ 174. oldal utolsó pontja.
+
+241. Milyen olvasási konzisztenciát biztosít az Oracle és mivel éri ezt el? (3 pont)
+ 175. oldal piros elnevezések és 176. oldal 1. pontja.
+
+242. Adjuk meg az SQL92 ANSI/ISO szabványbanszereplő tranzakciós elkülönítési szinteket! (4 pont)
+ 179. oldal táblázat első oszlopa.
+
+243. Mi jellemező a nem olvasásbiztos elkülönítési szintre a piszkos, fantom, nem ismételhető olvasásokra vonatkozóan? (3 pont)
+179. oldal táblázat első sora.
+
+244. Mi jellemző az olvasásbiztos elkülönítési szintre a piszkos, fantom, nem ismételhető olvasásokra vonatkozóan? (3 pont)
+179. oldal táblázat második sora.
+
+245. Mi jellemző a megismételhető olvasás elkülönítési szintre a piszkos, fantom, nem ismételhető olvasásokra vonatkozóan? (3 pont)
+179. oldal táblázat harmadik sora.
+
+246. Mi jellemző a sorbarendezhető elkülönítési szintre a piszkos, fantom, nem ismételhető olvasásokra vonatkozóan? (3 pont)
+ 179. oldal táblázat negyedik sora.
+
+247. Milyen DML szintű zárakat használ az Oracle? (2 pont)
+ 185. oldal középső pont két alpontjával.
+
+248. Milyen zártípusokat használ az Oracle sorokra és táblákra? (6 pont)
+185. oldal utolsó pont és 187. oldal utolsó előtti pont 5 alpontja.
+
 \end{document}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.11.21)  12 DEC 2017 00:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.11.21)  12 DEC 2017 02:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1131,85 +1131,169 @@ LaTeX Info: Redefining \nameref on input line 100.
 LaTeX Info: Redefining \cal on input line 496.
 LaTeX Info: Redefining \mit on input line 497.
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 135.
+LaTeX Font Info:    Try loading font information for U+msa on input line 138.
 
 (c:/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 135.
+LaTeX Font Info:    Try loading font information for U+msb on input line 138.
 
 (c:/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 139.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 142.
 
 
 (c:/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <7> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 139.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 142.
  [1
 
 
 {c:/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-<01.png, id=27, 854.44218pt x 201.75375pt>
+<01.png, id=44, 854.44218pt x 201.75375pt>
 File: 01.png Graphic file (type png)
 <use 01.png>
-Package pdftex.def Info: 01.png  used on input line 187. on input line 187.
+Package pdftex.def Info: 01.png  used on input line 191. on input line 191.
 Package pdftex.def Info: Requested size: 361.49689pt x 85.35826pt on input line
- 187.
+ 191.
  [2 <./01.png>]
-Overfull \hbox (6.51318pt too wide) in paragraph at lines 226--228
+Overfull \hbox (6.51318pt too wide) in paragraph at lines 230--232
 []\T1/cmr/m/n/10 205. Ad-junk pél-dát ar-ra, hogy két üte-me-zés meg-el®-zé-si 
 gráf-ja meg-egye-zik, de nem konfliktus-ekvivalensek!(4
  []
 
-<02.png, id=36, 362.10281pt x 329.73187pt>
+<02.png, id=53, 362.10281pt x 329.73187pt>
 File: 02.png Graphic file (type png)
 <use 02.png>
-Package pdftex.def Info: 02.png  used on input line 235. on input line 235.
-Package pdftex.def Info: Requested size: 93.73563pt x 85.35826pt on input line 
-235.
+Package pdftex.def Info: 02.png  used on input line 239. on input line 239.
+Package pdftex.def Info: Requested size: 62.49042pt x 56.9055pt on input line 2
+39.
 [3 <./02.png>]
-<03.png, id=46, 962.09438pt x 497.60907pt>
+<03.png, id=62, 962.09438pt x 497.60907pt>
 File: 03.png Graphic file (type png)
 <use 03.png>
-Package pdftex.def Info: 03.png  used on input line 298. on input line 298.
+Package pdftex.def Info: 03.png  used on input line 302. on input line 302.
 Package pdftex.def Info: Requested size: 330.0732pt x 170.71652pt on input line
- 298.
- [4 <./03.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 319.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 319.
+ 302.
+<04.png, id=63, 709.14937pt x 226.59656pt>
+File: 04.png Graphic file (type png)
+<use 04.png>
+Package pdftex.def Info: 04.png  used on input line 317. on input line 317.
+Package pdftex.def Info: Requested size: 267.13145pt x 85.35826pt on input line
+ 317.
+<05.png, id=64, 583.42969pt x 133.24782pt>
+File: 05.png Graphic file (type png)
+<use 05.png>
+Package pdftex.def Info: 05.png  used on input line 329. on input line 329.
+Package pdftex.def Info: Requested size: 249.1606pt x 56.9055pt on input line 3
+29.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+<06.png, id=65, 658.71094pt x 207.02344pt>
+File: 06.png Graphic file (type png)
+<use 06.png>
+Package pdftex.def Info: 06.png  used on input line 334. on input line 334.
+Package pdftex.def Info: Requested size: 271.601pt x 85.35826pt on input line 3
+34.
+[4 <./03.png> <./04.png>]
+<07.png, id=70, 807.015pt x 355.3275pt>
+File: 07.png Graphic file (type png)
+<use 07.png>
+Package pdftex.def Info: 07.png  used on input line 353. on input line 353.
+Package pdftex.def Info: Requested size: 258.48404pt x 113.81102pt on input lin
+e 353.
+ [5 <./05.png> <./06.png> <./07.png>]
+Overfull \hbox (19.28561pt too wide) in paragraph at lines 400--402
+[]\T1/cmr/m/n/10 220. Osz-tott és ki-zá-ró-la-gos zá-rak ese-tén ad-junk meg fe
+l-té-te-le-ket az üte-me-zés konfliktus-sorbarendezhet®ségére?
+ []
+
+<08.png, id=78, 518.6878pt x 310.91156pt>
+File: 08.png Graphic file (type png)
+<use 08.png>
+Package pdftex.def Info: 08.png  used on input line 419. on input line 419.
+Package pdftex.def Info: Requested size: 94.92685pt x 56.9055pt on input line 4
+19.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[6]
+<09.png, id=83, 850.67813pt x 39.14626pt>
+File: 09.png Graphic file (type png)
+<use 09.png>
+Package pdftex.def Info: 09.png  used on input line 440. on input line 440.
+Package pdftex.def Info: Requested size: 309.15147pt x 14.22636pt on input line
+ 440.
+<10.png, id=84, 335.75438pt x 115.93312pt>
+File: 10.png Graphic file (type png)
+<use 10.png>
+Package pdftex.def Info: 10.png  used on input line 447. on input line 447.
+Package pdftex.def Info: Requested size: 164.80798pt x 56.9055pt on input line 
+447.
+ [7 <./08.png> <./09.png> <./10.png>]
+<11.png, id=90, 519.44063pt x 232.61906pt>
+File: 11.png Graphic file (type png)
+<use 11.png>
+Package pdftex.def Info: 11.png  used on input line 471. on input line 471.
+Package pdftex.def Info: Requested size: 190.60481pt x 85.35826pt on input line
+ 471.
+<12.png, id=91, 584.1825pt x 234.8775pt>
+File: 12.png Graphic file (type png)
+<use 12.png>
+Package pdftex.def Info: 12.png  used on input line 486. on input line 486.
+Package pdftex.def Info: Requested size: 212.30225pt x 85.35826pt on input line
+ 486.
+ [8 <./11.png> <./12.png>]
+<13.png, id=99, 676.77844pt x 301.125pt>
+File: 13.png Graphic file (type png)
+<use 13.png>
+Package pdftex.def Info: 13.png  used on input line 522. on input line 522.
+Package pdftex.def Info: Requested size: 255.7947pt x 113.81102pt on input line
+ 522.
+
+Overfull \hbox (1.76555pt too wide) in paragraph at lines 537--541
+\T1/cmr/m/n/10 kollt? Ad-juk meg a fa-pro-to-koll 4 sza-bá-lyát! (4 pont) http:
+//people.inf.elte.hu/kiss/15ab2/konkurencia.ppt
+ []
+
+[9 <./13.png>] [10]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 575.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 575.
  (./04.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 319.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 319.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 575.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 575.
 Package rerunfilecheck Info: File `04.out' has not changed.
-(rerunfilecheck)             Checksum: FF59BCECE5A5C0F3F5371F5379AF66F7;132.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 319.
+(rerunfilecheck)             Checksum: CE84118B516C69D463E067FE17D0A65A;798.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 575.
  ) 
 Here is how much of TeX's memory you used:
- 23847 strings out of 492985
- 410648 string characters out of 6136283
- 507153 words of memory out of 5000000
- 27016 multiletter control sequences out of 15000+600000
- 9977 words of font info for 29 fonts, out of 8000000 for 9000
+ 23920 strings out of 492985
+ 411372 string characters out of 6136283
+ 507155 words of memory out of 5000000
+ 27063 multiletter control sequences out of 15000+600000
+ 11517 words of font info for 31 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 62i,7n,120p,433b,405s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,7n,120p,433b,461s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}<c:/texl
 ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2017/t
 exmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2017/texmf-dist/
 fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2017/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmsy10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmsy7.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sf
-bx1440.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb
-><c:/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb><c:/texli
-ve/2017/texmf-dist/fonts/type1/public/cm-super/sfrm2488.pfb><c:/texlive/2017/te
-xmf-dist/fonts/type1/public/cm-super/sfti1000.pfb>
-Output written on 04.pdf (4 pages, 259007 bytes).
+bx1200.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb
+><c:/texlive/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><c:/texli
+ve/2017/texmf-dist/fonts/type1/public/cm-super/sfrm1440.pfb><c:/texlive/2017/te
+xmf-dist/fonts/type1/public/cm-super/sfrm2488.pfb><c:/texlive/2017/texmf-dist/f
+onts/type1/public/cm-super/sfti1000.pfb>
+Output written on 04.pdf (10 pages, 415904 bytes).
 PDF statistics:
- 90 PDF objects out of 1000 (max. 8388607)
- 70 compressed objects within 1 object stream
- 16 named destinations out of 1000 (max. 500000)
- 36 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 155 PDF objects out of 1000 (max. 8388607)
+ 117 compressed objects within 2 object streams
+ 31 named destinations out of 1000 (max. 500000)
+ 118 words of extra memory for PDF output out of 10000 (max. 10000000)
 
